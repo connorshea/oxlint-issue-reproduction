@@ -1,0 +1,19 @@
+{
+  "name": "oxlint-import-extensions-repro",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Reproduction for oxc#19431 - import/extensions false positive",
+  "scripts": {
+    "lint:oxlint": "oxlint --config oxlint.json src/main.mts",
+    "lint:eslint": "eslint src/main.mts",
+    "lint": "pnpm lint:oxlint; pnpm lint:eslint"
+  },
+  "devDependencies": {
+    "oxlint": "latest",
+    "eslint": "^8",
+    "eslint-plugin-import": "latest",
+    "@typescript-eslint/parser": "^7",
+    "typescript": "latest"
+  }
+}
