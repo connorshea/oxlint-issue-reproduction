@@ -12,13 +12,13 @@ ESLint with `eslint-plugin-import` does **not** flag these imports.
 
 ```
 src/
-  main.mts                    # imports using .js extensions
+  main.ts                     # imports using .js extensions
   tools/test/
     shards.ts                 # source file (imported as shards.js)
     utils.ts                  # source file (imported as utils.js)
 ```
 
-`src/main.mts` contains:
+`src/main.ts` contains:
 
 ```ts
 import { testShards } from './tools/test/shards.js';
@@ -34,7 +34,7 @@ Both linters are configured with `import/extensions: ["error", "ignorePackages"]
 
 ```bash
 pnpm install
-pnpm oxlint   # shows false positives (bug)
+pnpm oxlint    # shows false positives (bug)
 pnpm eslint    # passes with no errors (correct)
 ```
 
