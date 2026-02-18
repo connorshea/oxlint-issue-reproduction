@@ -44,14 +44,14 @@ pnpm eslint    # passes with no errors (correct)
 
 ```
   x eslint-plugin-import(extensions): Missing file extension in import declaration.
-   ,-[src/main.mts:7:1]
+   ,-[src/main.ts:7:1]
  7 | import { testShards } from './tools/test/shards.js';
    : ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
    `----
   help: Add a file extension to this import.
 
   x eslint-plugin-import(extensions): Missing file extension in import declaration.
-    ,-[src/main.mts:8:1]
+    ,-[src/main.ts:8:1]
   8 | ,-> import {
   9 | |     getCoverageIgnorePatterns,
  10 | |     normalizePattern,
