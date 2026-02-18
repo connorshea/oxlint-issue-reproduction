@@ -4,7 +4,7 @@ import tsParser from '@typescript-eslint/parser';
 
 export default defineConfig([
   {
-    files: ['**/*.ts', '**/*.mts', '**/*.tsx'],
+    files: ['**/*.js', '**/*.ts', '**/*.mts', '**/*.tsx'],
     languageOptions: {
       parser: tsParser,
       parserOptions: {
@@ -22,10 +22,7 @@ export default defineConfig([
       },
     },
     rules: {
-      'import/extensions': [
-        'error',
-        'ignorePackages'
-      ]
+      'import/extensions': ['error', 'ignorePackages']
     }
   }
 ]);
