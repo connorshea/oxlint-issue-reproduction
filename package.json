@@ -4,6 +4,9 @@
   "private": true,
   "type": "module",
   "description": "Reproduction for oxc#19431 - import/extensions false positive",
+  "pnpm": {
+    "onlyBuiltDependencies": ["unrs-resolver"]
+  },
   "devDependencies": {
     "@typescript-eslint/parser": "^8",
     "eslint": "^9",
