@@ -34,8 +34,8 @@ Both linters are configured with `import/extensions: ["error", "always"]`.
 
 ```bash
 pnpm install
-pnpm lint:oxlint   # shows false positives (bug)
-pnpm lint:eslint    # passes with no errors (correct)
+pnpm oxlint   # shows false positives (bug)
+pnpm eslint    # passes with no errors (correct)
 ```
 
 ## Results

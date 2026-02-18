@@ -4,16 +4,11 @@
   "private": true,
   "type": "module",
   "description": "Reproduction for oxc#19431 - import/extensions false positive",
-  "scripts": {
-    "lint:oxlint": "oxlint --config oxlint.json src/main.mts",
-    "lint:eslint": "eslint src/main.mts",
-    "lint": "pnpm lint:oxlint; pnpm lint:eslint"
-  },
   "devDependencies": {
     "oxlint": "latest",
-    "eslint": "^8",
+    "eslint": "^9",
     "eslint-plugin-import": "latest",
-    "@typescript-eslint/parser": "^7",
+    "@typescript-eslint/parser": "^8",
     "typescript": "latest"
   }
 }
