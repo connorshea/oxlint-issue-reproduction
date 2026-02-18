@@ -1,41 +1,42 @@
-# oxlint import/extensions false positive reproduction
+# oxlint import/no-named-as-default false positive reproduction
 
-Reproduction for [oxc-project/oxc#19431](https://github.com/oxc-project/oxc/issues/19431).
+Reproduction for [oxc-project/oxc#19501](https://github.com/oxc-project/oxc/issues/19501).
 
 ## Problem
 
-When using `import/extensions` with `"ignorePackages"` (or `"always"`), oxlint incorrectly flags imports that **already have** `.js` extensions as missing extensions. This happens when `.ts` (or `.mts`) files import `.ts` source files using `.js` extensions — a standard practice in TypeScript with `Node16`/`NodeNext` module resolution.
-
-ESLint with `eslint-plugin-import` does **not** flag these imports.
+When a module exports both a `default` export and a named export of the same value, oxlint's `import/no-named-as-default` rule incorrectly warns when that value is imported using the default import syntax. ESLint's `eslint-plugin-import` does **not** flag this pattern.
 
 ## Setup
 
 ```
 src/
-  main.ts                     # imports using .js extensions
-  tools/test/
-    shards.ts                 # source file (imported as shards.js)
-    utils.ts                  # source file (imported as utils.js)
+  tokens.ts    # exports `export default tokens` AND `export { tokens }`
+  consumer.ts  # imports `tokens` as the default import
 ```
 
-`src/main.ts` contains:
+`src/tokens.ts`:
 
 ```ts
-import { testShards } from './tools/test/shards.js';
-import {
-  getCoverageIgnorePatterns,
-  normalizePattern,
-} from './tools/test/utils.js';
+const tokens = { color: "blue" };
+
+export default tokens;
+export { tokens };
 ```
 
-Both linters are configured with `import/extensions: ["error", "ignorePackages"]`.
+`src/consumer.ts`:
+
+```ts
+import tokens from './tokens.js'; // oxlint incorrectly warns here
+```
+
+Both linters are configured with `import/no-named-as-default: "error"`.
 
 ## Reproduce
 
 ```bash
 pnpm install
-pnpm oxlint    # shows false positives (bug)
-pnpm eslint    # passes with no errors (correct)
+pnpm lint:oxlint   # shows false positive (bug)
+pnpm lint:eslint   # passes with no errors (correct)
 ```
 
 ## Results
@@ -43,23 +44,14 @@ pnpm eslint    # passes with no errors (correct)
 ### oxlint 1.48.0 (INCORRECT — false positive)
 
 ```
-  x eslint-plugin-import(extensions): Missing file extension in import declaration.
-   ,-[src/main.ts:7:1]
- 7 | import { testShards } from './tools/test/shards.js';
-   : ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  x eslint-plugin-import(no-named-as-default): Using exported name 'tokens' as identifier for default import.
+   ,-[src/consumer.ts:9:1]
+ 9 | import tokens from './tokens.js';
+   : ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
    `----
-  help: Add a file extension to this import.
+  help: ...
 
-  x eslint-plugin-import(extensions): Missing file extension in import declaration.
-    ,-[src/main.ts:8:1]
-  8 | ,-> import {
-  9 | |     getCoverageIgnorePatterns,
- 10 | |     normalizePattern,
- 11 | `-> } from './tools/test/utils.js';
-    `----
-  help: Add a file extension to this import.
-
-Found 0 warnings and 2 errors.
+Found 0 warnings and 1 error.
 ```
 
 ### ESLint 9.x + eslint-plugin-import 2.32.0 (CORRECT — no errors)
@@ -68,3 +60,7 @@ Found 0 warnings and 2 errors.
 $ pnpm lint:eslint
 (no output, exit code 0)
 ```
+
+## Root Cause
+
+The previous fix in [#19100](https://github.com/oxc-project/oxc/pull/19100) only addressed re-export cases (e.g., `export { userEvent as default } from './source'`), but missed the case where a module directly declares both `export default tokens` and `export { tokens }` in the same file.

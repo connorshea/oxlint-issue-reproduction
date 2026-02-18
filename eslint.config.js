@@ -22,7 +22,7 @@ export default defineConfig([
       },
     },
     rules: {
-      'import/extensions': ['error', 'ignorePackages']
+      'import/no-named-as-default': 'error'
     }
   }
 ]);
