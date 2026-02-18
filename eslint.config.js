@@ -12,6 +12,11 @@ export default defineConfig([
       },
     },
     plugins: { import: importPlugin },
+    settings: {
+      'import/resolver': {
+        typescript: true,
+      },
+    },
     rules: {
       'import/extensions': [
         'error',

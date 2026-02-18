@@ -5,10 +5,11 @@
   "type": "module",
   "description": "Reproduction for oxc#19431 - import/extensions false positive",
   "devDependencies": {
-    "oxlint": "latest",
-    "eslint": "^9",
-    "eslint-plugin-import": "latest",
     "@typescript-eslint/parser": "^8",
+    "eslint": "^9",
+    "eslint-import-resolver-typescript": "^4.4.4",
+    "eslint-plugin-import": "latest",
+    "oxlint": "latest",
     "typescript": "latest"
   }
 }
