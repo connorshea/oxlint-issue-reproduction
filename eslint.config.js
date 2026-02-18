@@ -13,6 +13,9 @@ export default defineConfig([
     },
     plugins: { import: importPlugin },
     settings: {
+      "import/parsers": {
+        "@typescript-eslint/parser": [".ts", ".tsx", ".mts"],
+      },
       'import/resolver': {
         typescript: true,
       },
