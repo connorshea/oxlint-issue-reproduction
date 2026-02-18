@@ -4,10 +4,6 @@
   "private": true,
   "type": "module",
   "description": "Reproduction for oxc#19501 - import/no-named-as-default false positive",
-  "scripts": {
-    "lint:oxlint": "oxlint src/consumer.ts",
-    "lint:eslint": "eslint src/consumer.ts"
-  },
   "devDependencies": {
     "@typescript-eslint/parser": "^8",
     "eslint": "^9",
