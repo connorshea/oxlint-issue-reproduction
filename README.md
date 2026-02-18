@@ -4,7 +4,7 @@ Reproduction for [oxc-project/oxc#19431](https://github.com/oxc-project/oxc/issu
 
 ## Problem
 
-When using `import/extensions` with `"always"`, oxlint incorrectly flags imports that **already have** `.js` extensions as missing extensions. This happens when `.mts` files import `.ts` source files using `.js` extensions — a standard practice in TypeScript with `Node16`/`NodeNext` module resolution.
+When using `import/extensions` with `"ignorePackages"` (or `"always"`), oxlint incorrectly flags imports that **already have** `.js` extensions as missing extensions. This happens when `.mts` files import `.ts` source files using `.js` extensions — a standard practice in TypeScript with `Node16`/`NodeNext` module resolution.
 
 ESLint with `eslint-plugin-import` does **not** flag these imports.
 
@@ -28,7 +28,7 @@ import {
 } from './tools/test/utils.js';
 ```
 
-Both linters are configured with `import/extensions: ["error", "always"]`.
+Both linters are configured with `import/extensions: ["error", "ignorePackages"]`.
 
 ## Reproduce
 
@@ -62,7 +62,7 @@ pnpm eslint    # passes with no errors (correct)
 Found 0 warnings and 2 errors.
 ```
 
-### ESLint 8.57.1 + eslint-plugin-import 2.32.0 (CORRECT — no errors)
+### ESLint 9.x + eslint-plugin-import 2.32.0 (CORRECT — no errors)
 
 ```
 $ pnpm lint:eslint
