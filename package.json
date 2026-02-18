@@ -9,7 +9,7 @@
     "eslint": "^9",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import": "latest",
-    "oxlint": "latest",
+    "oxlint": "1.48.0",
     "typescript": "latest"
   }
 }
